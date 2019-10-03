@@ -1,80 +1,138 @@
 info:
   title: Uiza Live APIs
   version: 5.1.0
-  termsOfService: 'https://uiza.io/terms'
-  contact:
-    name: Quach Thai Duy
-    email: duyqt@uiza.io
-  license: {}
   description: |-
     This website documents the public API for Uiza version 5.1.0
 
     The Uiza APIs are HTTP-based RESTful APIs. Our API has predictable, resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses HTTP response codes, authentication, verbs.
+  license: {}
+  contact:
+    name: Quach Thai Duy
+    email: duyqt@uiza.io
+  termsOfService: 'https://uiza.io/terms'
 servers:
   - url: 'https://v5.dev.uizadev.io'
 paths:
-  '/api/v5/live/entities/{entity_id}/stream-key':
-    put:
-      summary: Reset stream key of entity
-      operationId: ResetEntityStreamKey
+  /api/v5/live/entities:
+    get:
+      summary: List entities
+      operationId: ListEntities
       responses:
         '200':
-          description: A successful response. Your Stream URL and Stream Key has been reset
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/modelEntities'
+          content:
+            application/json:
+              schema:
+                $ref: ./models/modelentity.v1.yaml
+              examples:
+                example:
+                  value:
+                    data:
+                      - id: bc964fbe-6fa4-489c-8d79-3f413cd47859
+                        user_id: uiza
+                        app_id: uiza
+                        name: Test Event
+                        description: Event for Test
+                        stream_url: 'rtmp://34.87.68.53/hls'
+                        stream_key: live_zBMPocg5l8
+                        region: asia-southeast-1
+                        status: ready
+                        created_at: '2019-10-03T16:24:45Z'
+                        updated_at: '2019-10-03T16:24:45Z'
+                    next_page_token: 2
+                    total_records: 11294
+      parameters:
+        - name: page_size
+          in: query
+          required: false
+          type: string
+          schema:
+            type: number
+        - name: page_token
+          in: query
+          required: false
+          type: string
+          schema:
+            type: number
+      requestBody:
+        description: ''
+      description: Retrieves the details of an existing event.
+      tags:
+        - Create Live Event
+    post:
+      summary: Create a entity
+      operationId: CreateEntity
+      responses:
+        '200':
+          description: 'Created success. Try **Get Entity Detail** to get the status and Stream URL with Stream key'
           schema:
             $ref: '#/definitions/modelEntity'
           content:
             application/json:
               schema:
-                $ref: ''
+                $ref: ./models/modelentity.v1.yaml
               examples:
-                example-1:
+                example:
                   value:
-                    id: e11ed326-0237-4e09-9a24-60d5682fa5b6
+                    id: bc964fbe-6fa4-489c-8d79-3f413cd47859
                     user_id: uiza
                     app_id: uiza
                     name: Test Event
                     description: Event for Test
-                    stream_url: 'rtmp://35.198.213.120/hls'
-                    stream_key: live_Cmtb8tz6sA
                     region: asia-southeast-1
-                    status: ready
-                    created_at: '2019-10-03T11:31:51Z'
-                    updated_at: '2019-10-03T16:32:26Z'
-        '400':
-          description: 'Bad Request. Missing id parameter!'
+                    status: init
+                    created_at: '2019-10-03T16:24:45Z'
+                    updated_at: '2019-10-03T16:24:45Z'
+        '404':
+          description: 'Not Found. Your information about the URL or parameter is not correct, please check again.'
           content:
             application/json:
               schema:
                 type: object
-                properties:
-                  error:
-                    type: string
-                  code:
-                    type: string
-                  message:
-                    type: string
+                properties: {}
               examples:
-                example-1:
-                  value:
-                    error: 'Missing id parameter!'
-                    code: 3
-                    message: 'Missing id parameter!'
-      parameters:
-        - name: id
-          in: path
-          required: true
-          type: string
+                example-1: {}
+      parameters: []
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Test
+                  description: The event name (limit 100 characters)
+                description:
+                  type: string
+                  default: My 1st event streaming
+                  description: An arbitrary string attached to the object. Often useful for displaying to users.
+                region:
+                  type: string
+                  default: asia-southeast-1
+                  enum:
+                    - asia-southeast-1
+                    - do-bangalore-1
+                    - asia-south-1
+                    - e2e-newdelhi-1
+                  description: An enum value to specify which region to receive stream in push mode.
+                app_id:
+                  type: string
+                  default: uiza
+                  description: The information of app_id provied by Uiza
+                user_id:
+                  type: string
+                  default: uiza
+                  description: The user_id provied by Uiza
+              required:
+                - name
+                - region
+      description: Creates a new live event to manage a live stream.
       tags:
-        - EntityService
-      description: Reset the streamkey
-      requestBody: {}
-    parameters:
-      - schema:
-          type: string
-        name: entity_id
-        in: path
-        required: true
-        description: The identifier of the live event to be retrieved.
+        - Create Live Event
+    parameters: []
   '/api/v5/live/entities/{entity_id}':
     get:
       summary: Get a entity
@@ -124,10 +182,10 @@ paths:
           in: path
           required: true
           type: string
-      tags:
-        - EntityService
       requestBody: {}
       description: Retrieves the details of an existing event. You need only provide the unique identifier of event that was returned upon Live event creation.
+      tags:
+        - Retrive Detail Event
     delete:
       summary: Delete a entity
       operationId: Delete
@@ -212,126 +270,68 @@ paths:
         in: path
         required: true
         description: The identifier of the live event to be retrieved.
-  /api/v5/live/entities:
-    get:
-      summary: List entities
-      operationId: ListEntities
+  '/api/v5/live/entities/{entity_id}/stream-key':
+    put:
+      summary: Reset stream key of entity
+      operationId: ResetEntityStreamKey
       responses:
         '200':
-          description: A successful response.
-          schema:
-            $ref: '#/definitions/modelEntities'
-          content:
-            application/json:
-              schema:
-                $ref: ./models/modelentity.v1.yaml
-              examples:
-                example:
-                  value:
-                    data:
-                      - id: bc964fbe-6fa4-489c-8d79-3f413cd47859
-                        user_id: uiza
-                        app_id: uiza
-                        name: Test Event
-                        description: Event for Test
-                        stream_url: 'rtmp://34.87.68.53/hls'
-                        stream_key: live_zBMPocg5l8
-                        region: asia-southeast-1
-                        status: ready
-                        created_at: '2019-10-03T16:24:45Z'
-                        updated_at: '2019-10-03T16:24:45Z'
-                    next_page_token: 2
-                    total_records: 11294
-      parameters:
-        - name: page_size
-          in: query
-          required: false
-          type: string
-          schema:
-            type: number
-        - name: page_token
-          in: query
-          required: false
-          type: string
-          schema:
-            type: number
-      tags:
-        - EntityService
-      requestBody:
-        description: ''
-      description: Retrieves the details of an existing event.
-    post:
-      summary: Create a entity
-      operationId: CreateEntity
-      responses:
-        '200':
-          description: 'Created success. Try **Get Entity Detail** to get the status and Stream URL with Stream key'
+          description: A successful response. Your Stream URL and Stream Key has been reset
           schema:
             $ref: '#/definitions/modelEntity'
           content:
             application/json:
               schema:
-                $ref: ./models/modelentity.v1.yaml
+                $ref: ''
               examples:
-                example:
+                example-1:
                   value:
-                    id: bc964fbe-6fa4-489c-8d79-3f413cd47859
+                    id: e11ed326-0237-4e09-9a24-60d5682fa5b6
                     user_id: uiza
                     app_id: uiza
                     name: Test Event
                     description: Event for Test
+                    stream_url: 'rtmp://35.198.213.120/hls'
+                    stream_key: live_Cmtb8tz6sA
                     region: asia-southeast-1
-                    status: init
-                    created_at: '2019-10-03T16:24:45Z'
-                    updated_at: '2019-10-03T16:24:45Z'
-        '404':
-          description: 'Not Found. Your information about the URL or parameter is not correct, please check again.'
+                    status: ready
+                    created_at: '2019-10-03T11:31:51Z'
+                    updated_at: '2019-10-03T16:32:26Z'
+        '400':
+          description: 'Bad Request. Missing id parameter!'
           content:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                  message:
+                    type: string
               examples:
-                example-1: {}
-      parameters: []
+                example-1:
+                  value:
+                    error: 'Missing id parameter!'
+                    code: 3
+                    message: 'Missing id parameter!'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      description: Reset the streamkey
+      requestBody: {}
       tags:
-        - livestream
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              properties:
-                name:
-                  type: string
-                  default: Test
-                  description: The event name (limit 100 characters)
-                description:
-                  type: string
-                  default: My 1st event streaming
-                  description: An arbitrary string attached to the object. Often useful for displaying to users.
-                region:
-                  type: string
-                  default: asia-southeast-1
-                  enum:
-                    - asia-southeast-1
-                    - do-bangalore-1
-                    - asia-south-1
-                    - e2e-newdelhi-1
-                  description: An enum value to specify which region to receive stream in push mode.
-                app_id:
-                  type: string
-                  default: uiza
-                  description: The information of app_id provied by Uiza
-                user_id:
-                  type: string
-                  default: uiza
-                  description: The user_id provied by Uiza
-              required:
-                - name
-                - region
-      description: Creates a new live event to manage a live stream.
-    parameters: []
+        - Reset Stream Key
+    parameters:
+      - schema:
+          type: string
+        name: entity_id
+        in: path
+        required: true
+        description: The identifier of the live event to be retrieved.
 definitions:
   modelDeleteEntityResponse:
     type: object
