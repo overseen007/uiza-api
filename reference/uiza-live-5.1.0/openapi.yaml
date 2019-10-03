@@ -158,8 +158,8 @@ paths:
         name: entityid
         in: path
         required: true
-        description: ''
-  '/api/v5/live/entities/{id}/stream-key':
+        description: The identifier of the live event to be retrieved.
+  '/api/v5/live/entities/{entityid}/stream-key':
     put:
       summary: Reset stream key of entity
       operationId: ResetEntityStreamKey
@@ -179,9 +179,10 @@ paths:
     parameters:
       - schema:
           type: string
-        name: id
+        name: entityid
         in: path
         required: true
+        description: The identifier of the live event to be retrieved.
 definitions:
   modelDeleteEntityResponse:
     type: object
