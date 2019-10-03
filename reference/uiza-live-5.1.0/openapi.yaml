@@ -87,7 +87,7 @@ paths:
                 - region
       description: Creates a new live event to manage a live stream.
     parameters: []
-  '/api/v5/live/entities/{id}':
+  '/api/v5/live/entities/{entityid}':
     get:
       summary: Get a entity
       operationId: GetEntity
@@ -155,9 +155,10 @@ paths:
     parameters:
       - schema:
           type: string
-        name: id
+        name: entityid
         in: path
         required: true
+        description: ''
   '/api/v5/live/entities/{id}/stream-key':
     put:
       summary: Reset stream key of entity

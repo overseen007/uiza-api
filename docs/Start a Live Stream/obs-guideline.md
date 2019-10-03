@@ -1,6 +1,6 @@
 # OBS Guideline
 
-Today I would like to show you how to easily start a Live stream with OBS after you received your stream URL and stream Key. For this Tutorial you need to download the OBS software at: Download Link. Once OBS is downloaded and installed on your device, we can start with the tutorial/
+Today I would like to show you how to easily start a Live stream with OBS after you received your stream URL and stream Key. For this Tutorial you need to download the OBS software at: https://obsproject.com/. Once OBS is downloaded and installed on your device, we can start with the tutorial/
 
 1. Open OBS Software
 
