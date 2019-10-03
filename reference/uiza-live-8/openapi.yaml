@@ -121,12 +121,14 @@ paths:
           type: string
           schema:
             type: number
+          description: The limit as how many records each array of data contain.
         - name: page_token
           in: query
           required: false
           type: string
           schema:
             type: number
+          description: The result as number of paginated data
       tags:
         - EntityService
       requestBody:
