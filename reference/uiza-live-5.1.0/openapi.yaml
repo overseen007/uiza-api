@@ -37,6 +37,7 @@ paths:
         - EntityService
       requestBody:
         description: ''
+      description: Retrieves the details of an existing event.
     post:
       summary: Create a entity
       operationId: CreateEntity
@@ -82,6 +83,7 @@ paths:
               required:
                 - name
                 - region
+      description: Creates a new live event to manage a live stream.
     parameters: []
   '/api/v5/live/entities/{id}':
     get:
@@ -101,6 +103,7 @@ paths:
       tags:
         - EntityService
       requestBody: {}
+      description: Retrieves the details of an existing event. You need only provide the unique identifier of event that was returned upon Live event creation.
     delete:
       summary: Delete a entity
       operationId: Delete
@@ -116,6 +119,7 @@ paths:
           type: string
       tags:
         - EntityService
+      description: Permanently deletes a entity. It cannot be undone.
     put:
       summary: Update a entity
       operationId: UpdateEntity
@@ -145,6 +149,7 @@ paths:
             schema:
               type: object
               properties: {}
+      description: Updates the specified live event by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     parameters:
       - schema:
           type: string
@@ -167,6 +172,7 @@ paths:
           type: string
       tags:
         - EntityService
+      description: Reset the streamkey
     parameters:
       - schema:
           type: string
