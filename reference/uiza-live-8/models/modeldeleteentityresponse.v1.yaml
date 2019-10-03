@@ -1,7 +1,0 @@
-title: modelDeleteEntityResponse
-type: object
-properties:
-      id:
-        type: string
-      deleted:
-        type: boolean
