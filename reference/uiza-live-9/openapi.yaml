@@ -119,14 +119,6 @@ paths:
           in: path
           required: true
           type: string
-        - name: name
-          in: query
-          required: false
-          type: string
-        - name: description
-          in: query
-          required: false
-          type: string
       tags:
         - EntityService
       requestBody:
@@ -134,7 +126,11 @@ paths:
           application/json:
             schema:
               type: object
-              properties: {}
+              properties:
+                name:
+                  type: string
+                description:
+                  type: string
       description: Updates the specified live event by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
     parameters:
       - schema:
