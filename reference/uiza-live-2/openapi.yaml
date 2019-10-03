@@ -22,13 +22,37 @@ paths:
           description: A successful response. Your Stream URL and Stream Key has been reset
           schema:
             $ref: '#/definitions/modelEntity'
+          content:
+            application/json:
+              schema:
+                $ref: ''
+              examples:
+                example-1:
+                  value:
+                    id: e11ed326-0237-4e09-9a24-60d5682fa5b6
+                    user_id: uiza
+                    app_id: uiza
+                    name: Test Event
+                    description: Event for Test
+                    stream_url: 'rtmp://35.198.213.120/hls'
+                    stream_key: live_Cmtb8tz6sA
+                    region: asia-southeast-1
+                    status: ready
+                    created_at: '2019-10-03T11:31:51Z'
+                    updated_at: '2019-10-03T16:32:26Z'
         '400':
           description: 'Bad Request. Missing id parameter!'
           content:
             application/json:
               schema:
                 type: object
-                properties: {}
+                properties:
+                  error:
+                    type: string
+                  code:
+                    type: string
+                  message:
+                    type: string
               examples:
                 example-1:
                   value:

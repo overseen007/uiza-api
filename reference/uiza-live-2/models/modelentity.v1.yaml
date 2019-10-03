@@ -1,0 +1,30 @@
+title: modelEntity
+type: object
+properties:
+      id:
+        type: string
+      user_id:
+        type: string
+      app_id:
+        type: string
+      deleted:
+        type: boolean
+        format: boolean
+      name:
+        type: string
+      description:
+        type: string
+      stream_url:
+        type: string
+      stream_key:
+        type: string
+      region:
+        type: string
+      status:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
