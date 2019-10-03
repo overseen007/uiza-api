@@ -136,6 +136,23 @@ paths:
           description: A successful response.
           schema:
             $ref: '#/definitions/modelDeleteEntityResponse'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  deleted:
+                    type: boolean
+                    enum:
+                      - 'true'
+                      - 'false'
+              examples:
+                example-true:
+                  value:
+                    id: e11ed326-0237-4e09-9a24-60d5682fa5b6
+                    deleted: true
       parameters:
         - name: id
           in: path
