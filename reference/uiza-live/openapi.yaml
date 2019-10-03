@@ -216,9 +216,9 @@ paths:
           in: path
           required: true
           type: string
-      tags:
-        - EntityService
       description: Permanently deletes a entity. It cannot be undone.
+      tags:
+        - Retrive Detail Event
     put:
       summary: Update a entity
       operationId: UpdateEntity
@@ -250,8 +250,6 @@ paths:
           in: path
           required: true
           type: string
-      tags:
-        - EntityService
       requestBody:
         content:
           application/json:
@@ -263,6 +261,8 @@ paths:
                 description:
                   type: string
       description: Updates the specified live event by setting the values of the parameters passed. Any parameters not provided will be left unchanged.
+      tags:
+        - Retrive Detail Event
     parameters:
       - schema:
           type: string
