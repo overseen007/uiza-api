@@ -12,3 +12,4 @@ Download Streamlabs at this Link: https://streamlabs.com/streamlabs-obs
 ![](../../assets/images/SL3.png)
 
 4. Start your stream
+![](../../assets/images/SL4.png)
