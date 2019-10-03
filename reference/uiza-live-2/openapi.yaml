@@ -265,7 +265,7 @@ paths:
       operationId: CreateEntity
       responses:
         '200':
-          description: Created success. Try Get Entity Detail to get the status and Stream URL with Stream key
+          description: 'Created success. Try **Get Entity Detail** to get the status and Stream URL with Stream key'
           schema:
             $ref: '#/definitions/modelEntity'
           content:
