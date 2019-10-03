@@ -1,0 +1,227 @@
+openapi: 3.0.0
+info:
+  title: Swagger Uiza
+  version: 1.0.0
+  description: ''
+  license: {}
+  contact:
+    name: Quach Thai Duy
+    email: duyqt@uiza.io
+  termsOfService: 'https://uiza.io/terms'
+servers:
+  - url: 'https://v5.dev.uizadev.io'
+paths:
+  /api/v5/live/entities:
+    get:
+      summary: List entities
+      operationId: ListEntities
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/modelEntities'
+      parameters:
+        - name: page_size
+          in: query
+          required: false
+          type: string
+          schema:
+            type: number
+        - name: page_token
+          in: query
+          required: false
+          type: string
+          schema:
+            type: number
+      tags:
+        - EntityService
+      requestBody:
+        description: ''
+    post:
+      summary: Create a entity
+      operationId: CreateEntity
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/modelEntity'
+      parameters: []
+      tags:
+        - EntityService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  default: Test
+                  description: The event name (limit 100 characters)
+                description:
+                  type: string
+                  default: My 1st event streaming
+                  description: An arbitrary string attached to the object. Often useful for displaying to users.
+                region:
+                  type: string
+                  default: asia-southeast-1
+                  enum:
+                    - asia-southeast-1
+                    - do-bangalore-1
+                    - asia-south-1
+                    - e2e-newdelhi-1
+                  description: An enum value to specify which region to receive stream in push mode.
+                app_id:
+                  type: string
+                  default: uiza
+                  description: The information of app_id provied by Uiza
+                user_id:
+                  type: string
+                  default: uiza
+                  description: The user_id provied by Uiza
+              required:
+                - name
+                - region
+    parameters: []
+  '/api/v5/live/entities/{id}':
+    get:
+      summary: Get a entity
+      operationId: GetEntity
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/modelEntity'
+        '': {}
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      tags:
+        - EntityService
+      requestBody: {}
+    delete:
+      summary: Delete a entity
+      operationId: Delete
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/modelDeleteEntityResponse'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      tags:
+        - EntityService
+    put:
+      summary: Update a entity
+      operationId: UpdateEntity
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/modelEntity'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+        - name: name
+          in: query
+          required: false
+          type: string
+        - name: description
+          in: query
+          required: false
+          type: string
+      tags:
+        - EntityService
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties: {}
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+  '/api/v5/live/entities/{id}/stream-key':
+    put:
+      summary: Reset stream key of entity
+      operationId: ResetEntityStreamKey
+      responses:
+        '200':
+          description: A successful response.
+          schema:
+            $ref: '#/definitions/modelEntity'
+      parameters:
+        - name: id
+          in: path
+          required: true
+          type: string
+      tags:
+        - EntityService
+    parameters:
+      - schema:
+          type: string
+        name: id
+        in: path
+        required: true
+definitions:
+  modelDeleteEntityResponse:
+    type: object
+    properties:
+      id:
+        type: string
+      deleted:
+        type: boolean
+        format: boolean
+  modelEntities:
+    type: object
+    properties:
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/modelEntity'
+      next_page_token:
+        type: integer
+        format: int32
+      total_records:
+        type: integer
+        format: int32
+  modelEntity:
+    type: object
+    properties:
+      id:
+        type: string
+      user_id:
+        type: string
+      app_id:
+        type: string
+      deleted:
+        type: boolean
+        format: boolean
+      name:
+        type: string
+      description:
+        type: string
+      stream_url:
+        type: string
+      stream_key:
+        type: string
+      region:
+        type: string
+      status:
+        type: string
+      created_at:
+        type: string
+        format: date-time
+      updated_at:
+        type: string
+        format: date-time
