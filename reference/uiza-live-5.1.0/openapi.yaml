@@ -1,8 +1,10 @@
-openapi: 3.0.0
 info:
-  title: Swagger Uiza
-  version: 1.0.0
-  description: ''
+  title: Uiza Live APIs
+  version: 5.1.0
+  description: |-
+    This website documents the public API for Uiza version 5.1.0
+
+    The Uiza APIs are HTTP-based RESTful APIs. Our API has predictable, resource-oriented URLs, accepts form-encoded request bodies, returns JSON-encoded responses, and uses HTTP response codes, authentication, verbs.
   license: {}
   contact:
     name: Quach Thai Duy
