@@ -19,9 +19,22 @@ paths:
       operationId: ResetEntityStreamKey
       responses:
         '200':
-          description: A successful response.
+          description: A successful response. Your Stream URL and Stream Key has been reset
           schema:
             $ref: '#/definitions/modelEntity'
+        '400':
+          description: 'Bad Request. Missing id parameter!'
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              examples:
+                example-1:
+                  value:
+                    error: 'Missing id parameter!'
+                    code: 3
+                    message: 'Missing id parameter!'
       parameters:
         - name: id
           in: path
